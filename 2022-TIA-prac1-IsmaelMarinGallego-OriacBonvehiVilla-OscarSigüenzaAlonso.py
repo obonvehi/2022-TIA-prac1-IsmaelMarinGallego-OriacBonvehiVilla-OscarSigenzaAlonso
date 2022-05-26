@@ -1,16 +1,4 @@
-# This is a sample Python script.
+restaurant = {"kitchen": [{"A1": 1}, {"A3": 1.5}], "A1": [{"A3": 0.5}, {"A2": 1.75}, {"kitchen": 1}],
+              "A3": [{"kitchen": 1.5}, {"A1": 0.5}, {"A4": 1.75}]}
 
-# Press Mayús+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+print(restaurant.values())
