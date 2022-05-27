@@ -1,56 +1,60 @@
 restaurant = {
-    "kitchen": {"A1": 1, "A3": 1.5},
-    "A1": {"A3": 0.5, "A2": 1.75, "kitchen": 1},
-    "A2": {"A1": 1.75, "A4": 0.5},
-    "A3": {"kitchen": 1.5, "A1": 0.5, "A4": 1.75, "E3": 2.5, "E4": 2},
-    "A4": {"A2": 0.5, "A3": 1.75, "D3": 3.5, "D4": 3, "B3": 2, "B4": 2.5},
+    "kitchen": {"A1": [1, False], "A3": [1.5, False]},
+    "A1": {"A3": [0.5, False], "A2": [1.75, False], "kitchen": [1, False]},
+    "A2": {"A1": [1.75, False], "A4": [0.5, False]},
+    "A3": {"kitchen": [1.5, False], "A1": [0.5, False], "A4": [1.75, False], "E3": [2.5, False], "E4": [2, False]},
+    "A4": {"A2": [0.5, False], "A3": [1.75, False], "D3": [3.5, False], "D4": [3, False], "B3": [2, False], "B4": [2.5, False]},
 
-    "B1": {"B2": 0.5, "B3": 1.75},
-    "B2": {"B1": 0.5, "B4": 1.75},
-    "B3": {"B1": 1.75, "B4": 0.5, "A4": 2, "D4": 2.5},
-    "B4": {"B3": 0.5, "B2": 1.75, "C4": 1.5, "A4": 2.5},
+    "B1": {"B2": [0.5, False], "B3": [1.75, False]},
+    "B2": {"B1": [0.5, False], "B4": [1.75, False]},
+    "B3": {"B1": [1.75, False], "B4": [0.5, False], "A4": [2, False], "D4": [2.5, False]},
+    "B4": {"B3": [0.5, False], "B2": [1.75, False], "C4": [1.5, False], "A4": [2.5, False]},
 
-    "C1": {"C2": 1, "C4": 1.75},
-    "C2": {"C1": 1, "C6": 0, "C3": 1},
-    "C3": {"C2": 1, "C8": 1.75},
-    "C4": {"B4": 1.5, "C7": 0.5, "C1": 1.75},
-    "C5": {"C6": 0.5, "C8": 0.5},
-    "C6": {"C2": 0, "C5": 0.5, "C7": 0.5},
-    "C7": {"C6": 0.5, "C4": 0.5},
-    "C8": {"C5": 0.5, "D3": 1.5, "C3": 1.75},
+    "C1": {"C2": [1, False], "C4": [1.75, False]},
+    "C2": {"C1": [1, False], "C6": [0, False], "C3": [1, False]},
+    "C3": {"C2": [1, False], "C8": [1.75, False]},
+    "C4": {"B4": [1.5, False], "C7": [0.5, False], "C1": [1.75, False]},
+    "C5": {"C6": [0.5, False], "C8": [0.5, False]},
+    "C6": {"C2": [0, False], "C5": [0.5, False], "C7": [0.5, False]},
+    "C7": {"C6": [0.5, False], "C4": [0.5, False]},
+    "C8": {"C5": [0.5, False], "D3": [1.5, False], "C3": [1.75, False]},
 
-    "D1": {"D2": 0.5, "D3": 1.75},
-    "D2": {"D1": 0.5, "D4": 1.75},
-    "D3": {"D1": 1.75, "D4": 0.5, "A4": 3.5, "C8": 1.5},
-    "D4": {"D3": 0.5, "D2": 1.75, "B3": 2.5, "A4": 3},
+    "D1": {"D2": [0.5, False], "D3": [1.75, False]},
+    "D2": {"D1": [0.5, False], "D4": [1.75, False]},
+    "D3": {"D1": [1.75, False], "D4": [0.5, False], "A4": [3.5, False], "C8": [1.5, False]},
+    "D4": {"D3": [0.5, False], "D2": [1.75, False], "B3": [2.5, False], "A4": [3, False]},
 
-    "E1": {"E2": 0.5, "E3": 1.75},
-    "E2": {"E1": 0.5, "E4": 1.75},
-    "E3": {"E4": 0.5, "E1": 1.75, "A3": 2.5},
-    "E4": {"E3": 0.5, "E2": 1.75, "A3": 2},
+    "E1": {"E2": [0.5, False], "E3": [1.75, False]},
+    "E2": {"E1": [0.5, False], "E4": [1.75, False]},
+    "E3": {"E4": [0.5, False], "E1": [1.75, False], "A3": [2.5, False]},
+    "E4": {"E3": [0.5, False], "E2": [1.75, False], "A3": [2, False]},
 }
 path = []
 cost = [0]
 best_path = []
-best_cost = [0]
+best_cost = [1000]
 tables = []
 
 
 def search():
-    open("kitchen")
+    path.append("kitchen")
+    open("kitchen", "A1")
 
 
-def open(open_table):
-    if not path.__contains__(open_table):
-        if not is_solution():
-            path.append(open_table)
-            t = restaurant.get(open_table)
-            for key in t.keys():
-                cost[0] += t.get(key)
-                open(key)
-            #path.remove(open_table)
-
-
+def open(table, anterior):
+    t = restaurant.get(table)
+    if t.get(anterior)[1]:
+        return
+    if not is_solution():
+        for key in t.keys():
+            if not t.get(key)[1]:
+                path.append(key)
+                cost[0] += t.get(key)[0]
+                t.get(key)[1] = True
+                open(key, table)
+                cost[0] -= t.get(key)[0]
+                t.get(key)[1] = False
+                path.pop()
 
 
 def is_solution():
@@ -59,22 +63,25 @@ def is_solution():
         if path.__contains__(t):
             solution += 1
 
-    if cost[0] < best_cost[0]:
-        best_cost[0] = cost
-        best_path[0] = path
-    return solution == 4
+    solution = (solution == 4)
+    if solution and cost[0] < best_cost[0]:
+        best_cost[0] = cost[0]
+        best_path.clear()
+        for t in path:
+            best_path.append(t)
+    return solution
 
 
 def input_tables():
-    tables.append("A1")
-    tables.append("A2")
-    tables.append("A3")
-    tables.append("C4")
-    #for i in range(4):
+    tables.append("C1")
+    tables.append("B2")
+    tables.append("D1")
+    tables.append("E4")
+    # for i in range(4):
     #    tables.append(input("Introduce table"+str(i+1)+": "))
 
 
 input_tables()
 search()
 print(path)
-print(path)
+print(best_path)
