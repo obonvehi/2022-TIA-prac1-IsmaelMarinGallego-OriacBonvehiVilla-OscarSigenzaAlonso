@@ -45,12 +45,10 @@ def scope():
 
     def the_best_route(t_list):
         nonlocal destiny, path, all_path
-        path.append(origin)
+        all_path.append(origin)
         while len(t_list) > 0:
             all_path += the_closest_table(t_list)
             t_list.remove(origin)
-        print(all_path)
-        print(all_cost)
         destiny = "kitchen"
         search(origin)
         all_path += best_path
@@ -66,8 +64,6 @@ def scope():
                 closest_table_cost = best_cost
                 closest_table = best_path
             reset()
-        print(closest_table)
-        print(closest_table_cost)
         origin = closest_table[len(closest_table)-1]
         all_cost += closest_table_cost
         return closest_table
@@ -108,10 +104,8 @@ def scope():
         return tables
 
     the_best_route(input_tables())
-
     print(all_path)
     print(all_cost + best_cost)
-    #the_closest_table()
 
 
 scope()
