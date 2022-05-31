@@ -64,7 +64,7 @@ def scope():
                 closest_table_cost = best_cost
                 closest_table = best_path
             reset()
-        origin = closest_table[len(closest_table)-1]
+        origin = closest_table[len(closest_table) - 1]
         all_cost += closest_table_cost
         return closest_table
 
@@ -97,10 +97,27 @@ def scope():
         best_path = []
 
     def input_tables():
-        size = int(input("Introduce the number of tables: "))
+        size = 0
+        try:
+            size = int(input("Introduce the number of tables: "))
+            if size > 4 or size < 1:
+                print("valor a de estar entre 1 i 4")
+                input_tables()
+        except ValueError:
+            print("El valor ha de ser numeric")
+            input_tables()
+
+        return input_t(size)
+
+    def input_t(size):
         tables = []
+        table = ""
         for i in range(size):
-            tables.append(input("Introduce table" + str(i + 1) + ": "))
+            table = input("Introduce table" + str(i + 1) + ": ").capitalize()
+            while table not in restaurant.keys():
+                print("el valor no existeix")
+                table = input("Introduce table" + str(i + 1) + ": ").capitalize()
+            tables.append(table)
         return tables
 
     the_best_route(input_tables())
