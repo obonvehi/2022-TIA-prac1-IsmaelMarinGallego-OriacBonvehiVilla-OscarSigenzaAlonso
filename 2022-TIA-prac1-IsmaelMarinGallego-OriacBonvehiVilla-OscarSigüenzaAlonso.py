@@ -30,6 +30,10 @@ def scope():
         "E3": {"E4": 0.5, "E1": 1.75, "A3": 2.5},
         "E4": {"E3": 0.5, "E2": 1.75, "A3": 2},
     }
+
+    all_path = []
+    all_cost = 0
+
     cost = 0
     best_cost = 1000
 
@@ -39,23 +43,39 @@ def scope():
     origin = "kitchen"
     destiny = ""
 
-    def the_closest_table():
-        nonlocal cost, best_cost, best_path, path
-        t_list = input_tables()
-        pre_search(origin, t_list[0])
-        print(best_path)
-        print(best_cost)
-        cost = 0
-        best_cost = 1000
-        path = []
-        best_path = []
+    def the_best_route(t_list):
+        nonlocal destiny
+        camino = []
+        ori = ""
 
-    def pre_search(t_origin, t_destiny):
-        nonlocal origin, destiny, path
-        #path.append(t_origin)
-        origin = t_origin
-        destiny = t_destiny
+        while len(t_list) > 0:
+            camino += the_closest_table(t_list)
+            t_list.remove(origin)
+        print(camino)
+        print(all_cost)
+        destiny = "kitchen"
         search(origin)
+        camino += best_path
+        print(camino)
+        print(all_cost)
+
+    def the_closest_table(t_list):
+        nonlocal cost, best_cost, best_path, path, destiny, origin, all_cost
+        closest_table = []
+        closest_table_cost = 1000
+        for t in t_list:
+            path.append(origin)
+            destiny = t
+            search(origin)
+            if best_cost < closest_table_cost:
+                closest_table_cost = best_cost
+                closest_table = best_path
+            reset()
+        print(closest_table)
+        print(closest_table_cost)
+        origin = closest_table.pop()
+        all_cost += closest_table_cost
+        return closest_table
 
     def search(table):
         nonlocal cost, best_cost, best_path, path
@@ -78,6 +98,13 @@ def scope():
             return True
         return False
 
+    def reset():
+        nonlocal cost, best_cost, best_path, path
+        cost = 0
+        best_cost = 1000
+        path = []
+        best_path = []
+
     def input_tables():
         size = int(input("Introduce the number of tables: "))
         tables = []
@@ -85,7 +112,8 @@ def scope():
             tables.append(input("Introduce table" + str(i + 1) + ": "))
         return tables
 
-    the_closest_table()
+    the_best_route(input_tables())
+    #the_closest_table()
 
 
 scope()
